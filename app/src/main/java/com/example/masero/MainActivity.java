@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.MessageFormat;
 
 import Backend.Dish;
+import Backend.Global;
 import Backend.ListDish;
 import Backend.Mail.SendMail;
 import Database.Connect;
@@ -20,7 +21,6 @@ import Database.GetListDish;
 
 public class MainActivity extends AppCompatActivity {
     TextView textView1;
-    Connect connect;
     Thread thread;
     Button newOrderButton;
     Button prevOrdersButton;
@@ -36,9 +36,16 @@ public class MainActivity extends AppCompatActivity {
         prevOrdersButton = findViewById(R.id.previousOrders);
         yourOrdersButton = findViewById(R.id.yourOrder);
         setButtonsClickable(true);
+        makeConnect();
+    }
+
+    private void makeConnect() {
+        if (Global.connect!=null){
+            return;
+        }
         thread = new Thread(() -> {
-            connect = new Connect();
-            if (connect.getConnection()==null){
+            Global.connect = new Connect();
+            if (Global.connect.getConnection()==null){
                 Toast.makeText(this,"Nie można połączyć z bazą",Toast.LENGTH_LONG).show();
                 setButtonsClickable(false);
             }
@@ -85,17 +92,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newOrder(View view) throws InterruptedException {
-        GetListDish getListDish=new GetListDish(connect);
-        ListDish listDish=getListDish.getListOfDish();
-        while(!getListDish.getStatus()) {
-            Thread.sleep(100);
-        }
-        String menuList="";
-        for (Dish i:listDish.getDishList()) {
-            menuList+=i.toString();
-        }
         Intent intent= new Intent(MainActivity.this, NewOrder.class);
-        intent.putExtra("MenuList",menuList);
+        //intent.putExtra("MenuList",menuList);
         startActivity(intent);
     }
 }
