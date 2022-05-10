@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +26,9 @@ public class NewOrder extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String menuList;
+    ListDish listDish;
+    List<Dish> orderedDishList=new LinkedList<Dish>();
+    String orderedDishes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +38,19 @@ public class NewOrder extends AppCompatActivity {
         } catch (InterruptedException e) {
             Toast.makeText(this,"coś poszło nie tak",Toast.LENGTH_LONG).show();
         }
-        ListDish listDish = new ListDish(menuList);
+        listDish = new ListDish(menuList);
+        setRecycleView();
+        getSharPref();
+    }
+
+    private String getSharPref() {
+        String tmp;
+        SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF,MODE_PRIVATE);
+        tmp = sharedPreferences.getString(SharPref.ORDER_KEY,"");
+        return tmp;
+    }
+
+    private void setRecycleView() {
         recyclerView = findViewById(R.id.recycleView);
         List<Integer> images=new LinkedList<Integer>();
         for (int i=0;i<listDish.size();i++){
@@ -53,6 +70,22 @@ public class NewOrder extends AppCompatActivity {
         menuList="";
         for (Dish i:listDish.getDishList()) {
             menuList+=i.toString();
+        }
+    }
+
+    public void saveOrder(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF,MODE_PRIVATE);
+        sendOrderToDataBase(sharedPreferences.getString(SharPref.ORDER_KEY,""));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SharPref.ORDER_KEY,"");
+        editor.apply();
+    }
+
+    private void sendOrderToDataBase(String toSend) {
+        if (toSend==""){
+            Toast.makeText(this,"Puste zamóœienie",Toast.LENGTH_LONG).show();
+        }else{
+            ListDish list = new ListDish(toSend);
         }
     }
 }

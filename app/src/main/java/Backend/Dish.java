@@ -38,6 +38,6 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name+','+weight+','+price+','+id+';';
+        return name+','+weight+','+price+','+id+",;";
     }
 }

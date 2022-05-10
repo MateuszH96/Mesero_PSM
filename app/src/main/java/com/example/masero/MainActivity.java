@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Button newOrderButton;
     Button prevOrdersButton;
     Button yourOrdersButton;
-    public static final String SHARED_PREF = "sharedPreferences";
-    public static final String EMAIL_KEY = "email_key_check";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
