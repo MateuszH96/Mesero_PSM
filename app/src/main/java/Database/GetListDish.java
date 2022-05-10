@@ -28,7 +28,8 @@ public class GetListDish {
                     while (rs.next()){
                         listOfDish.add(new Dish(rs.getString("name"),
                                                 rs.getInt("weight"),
-                                                rs.getDouble("price")));
+                                                rs.getDouble("price"),
+                                                rs.getInt("id")));
                     }
                     status = true;
                 }catch (Exception e){
