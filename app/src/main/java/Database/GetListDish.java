@@ -23,10 +23,7 @@ public class GetListDish {
                 status=false;
                 try{
                     Statement stmt = connect.getConnection().createStatement();
-                    ResultSet rs = stmt.executeQuery(
-                            "SELECT * " +
-                                    "FROM roznosci.dish_list dl " +
-                                    "WHERE dl.available IS TRUE;");
+                    ResultSet rs = stmt.executeQuery(SqlRequest.getFullListRequest);
                     while (rs.next()){
                         listOfDish.add(new Dish(rs.getString("name"),
                                                 rs.getInt("weight"),

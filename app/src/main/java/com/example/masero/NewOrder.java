@@ -93,7 +93,6 @@ public class NewOrder extends AppCompatActivity {
             ListDish list = new ListDish(toSend);
             SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF, MODE_PRIVATE);
             String email = sharedPreferences.getString(SharPref.EMAIL_KEY, "");
-            toast=makeText(this,"catch error ??",LENGTH_SHORT);
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -111,7 +110,6 @@ public class NewOrder extends AppCompatActivity {
                         }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                        //toast.show();
                     }
                 }
             });

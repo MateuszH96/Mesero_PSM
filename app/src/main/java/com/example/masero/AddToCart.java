@@ -18,7 +18,6 @@ public class AddToCart extends AppCompatActivity {
     ImageView image;
     Integer count =1;
     Dish dish;
-    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,6 @@ public class AddToCart extends AppCompatActivity {
         price=findViewById(R.id.priceTotal);
         image=findViewById(R.id.myImage);
         dish=new Dish(getIntent().getStringExtra("dish"));
-        //dishPrice=getIntent().getDoubleExtra("price",0.0);
         price.setText(dish.getPrice().toString()+"zł");
         image.setImageResource(Integer.parseInt(getIntent().getStringExtra("photo")));
     }
