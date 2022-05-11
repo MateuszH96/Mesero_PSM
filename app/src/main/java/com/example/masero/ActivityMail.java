@@ -25,9 +25,9 @@ public class ActivityMail extends AppCompatActivity {
     }
 
     private void saveData(String input) {
-        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("EMAIL_KEY",input);
+        editor.putString(SharPref.EMAIL_KEY,input);
         editor.apply();
         Toast.makeText(this,"ustawiono mail: \n"+input,Toast.LENGTH_LONG).show();
         Intent intent = new Intent(ActivityMail.this,MainActivity.class);

@@ -1,5 +1,6 @@
 package Database;
 
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 

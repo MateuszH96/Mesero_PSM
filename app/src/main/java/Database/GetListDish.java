@@ -1,5 +1,7 @@
 package Database;
 
+import android.content.SharedPreferences;
+
 import Backend.Dish;
 import Backend.ListDish;
 

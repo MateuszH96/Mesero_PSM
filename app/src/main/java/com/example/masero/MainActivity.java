@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private String getData(){
         String text;
-        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
-        text = sharedPreferences.getString("EMAIL_KEY","");
+        SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF,MODE_PRIVATE);
+        text = sharedPreferences.getString(SharPref.EMAIL_KEY,"");
         return text;
     }
     private void checkIsEmail() {
