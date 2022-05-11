@@ -22,6 +22,7 @@ import Backend.Global;
 import Backend.ListDish;
 import Backend.MyAdapter.MyAdapter;
 import Database.GetListDish;
+import Database.SqlRequest;
 
 public class NewOrder extends AppCompatActivity {
 
@@ -82,7 +83,7 @@ public class NewOrder extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SharPref.ORDER_KEY, "");
         editor.apply();
-        finish();
+        //finish();
     }
 
     private void sendOrderToDataBase(String toSend) throws SQLException {
@@ -92,26 +93,25 @@ public class NewOrder extends AppCompatActivity {
             ListDish list = new ListDish(toSend);
             SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF, MODE_PRIVATE);
             String email = sharedPreferences.getString(SharPref.EMAIL_KEY, "");
-            toast=makeText(this,"test",LENGTH_SHORT);
+            toast=makeText(this,"catch error ??",LENGTH_SHORT);
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         Integer id=0;
-                        String sql = "INSERT INTO roznosci.order VALUES(%d,%d,'%s',5);";
+                        //ring sql =
                         Statement stmt = Global.connect.getConnection().createStatement();
-                        ResultSet rs = stmt.executeQuery("SELECT MAX(o.id_order) AS \"MAX\" FROM roznosci.order o;");
+                        ResultSet rs = stmt.executeQuery(SqlRequest.getIdRequest);
                         rs.next();
                         String id_string = rs.getString("MAX");
-
                         id = Integer.parseInt(id_string) + 1;
                         for (Dish i : list.getDishList()) {
-                            String sqlRequest = String.format(sql, id, i.getId().intValue(), email);
+                            String sqlRequest = String.format(SqlRequest.sendOrderToDatabase, id, i.getId().intValue(), email);
                             stmt.executeUpdate(sqlRequest);
                         }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                        toast.show();
+                        //toast.show();
                     }
                 }
             });
