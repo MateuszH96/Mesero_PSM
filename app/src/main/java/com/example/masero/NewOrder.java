@@ -6,15 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
@@ -23,19 +20,17 @@ import java.util.List;
 import Backend.Dish;
 import Backend.Global;
 import Backend.ListDish;
-import Backend.Mail.SendMail;
 import Backend.MyAdapter.MyAdapter;
-import Database.GetID;
 import Database.GetListDish;
-import Database.SendOrderToDataBase;
 
 public class NewOrder extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String menuList;
     ListDish listDish;
-    List<Dish> orderedDishList = new LinkedList<Dish>();
-    String orderedDishes;
+    Toast toast;
+    //List<Dish> orderedDishList = new LinkedList<Dish>();
+    //String orderedDishes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +82,7 @@ public class NewOrder extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SharPref.ORDER_KEY, "");
         editor.apply();
+        finish();
     }
 
     private void sendOrderToDataBase(String toSend) throws SQLException {
@@ -96,19 +92,27 @@ public class NewOrder extends AppCompatActivity {
             ListDish list = new ListDish(toSend);
             SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF, MODE_PRIVATE);
             String email = sharedPreferences.getString(SharPref.EMAIL_KEY, "");
+            toast=makeText(this,"test",LENGTH_SHORT);
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {Statement stmt = Global.connect.getConnection().createStatement();
-                        stmt.executeUpdate("INSERT INTO roznosci.order VALUES(0,1,'mateuszhamera3@gmail.com',5);");
-                        Integer id = GetID.getIDFromBase(NewOrder.this);
+                    try {
+                        Integer id=0;
+                        String sql = "INSERT INTO roznosci.order VALUES(%d,%d,'%s',5);";
+                        Statement stmt = Global.connect.getConnection().createStatement();
+                        ResultSet rs = stmt.executeQuery("SELECT MAX(o.id_order) AS \"MAX\" FROM roznosci.order o;");
+                        rs.next();
+                        String id_string = rs.getString("MAX");
+
+                        id = Integer.parseInt(id_string) + 1;
                         for (Dish i : list.getDishList()) {
-                            SendOrderToDataBase.sendOrder(id, email, i);
+                            String sqlRequest = String.format(sql, id, i.getId().intValue(), email);
+                            stmt.executeUpdate(sqlRequest);
                         }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
+                        toast.show();
                     }
-
                 }
             });
             thread.start();
