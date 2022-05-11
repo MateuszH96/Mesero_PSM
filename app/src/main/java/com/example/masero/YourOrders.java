@@ -23,12 +23,12 @@ import Database.SqlRequest;
 public class YourOrders extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Order> orders = new LinkedList<Order>();
-    Handler handler = new Handler();
     boolean repeat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_orders);
+        recyclerView=findViewById(R.id.recycleViewYourOrders);
         set();
         repeat=true;
         while (repeat){
@@ -42,7 +42,6 @@ public class YourOrders extends AppCompatActivity {
     }
 
     private void setRecycleView() {
-        recyclerView=findViewById(R.id.recycleViewYourOrders);
         MyAdapterOrders myAdapterOrders = new MyAdapterOrders(this,orders);
         recyclerView.setAdapter(myAdapterOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,20 +65,24 @@ public class YourOrders extends AppCompatActivity {
                     Statement stmt = Global.connect.getConnection().createStatement();
                     Statement statement = Global.connect.getConnection().createStatement();
                     ResultSet rsId = stmt.executeQuery(sqlRequestIdList);
-                    ResultSet rsCurrentOrders = statement.executeQuery(sqlRequestFullCurrentOrders);
                     while(rsId.next()){
                         Integer id = Integer.parseInt(rsId.getString("id_order"));
+                        dishList.clear();
+                        ///Jest problem z poprawnym pobieraniem danych !
+                        ResultSet rsCurrentOrders = statement.executeQuery(sqlRequestFullCurrentOrders);
                         while (rsCurrentOrders.next()){
-                            dishList.add( new Dish(
-                                    rsCurrentOrders.getString("name"),
-                                    rsCurrentOrders.getInt("weight"),
-                                    rsCurrentOrders.getDouble("price"),
-                                    rsCurrentOrders.getInt("id")
-                            ));
+                            if (rsCurrentOrders.getInt("id_order") == id){
+                                dishList.add( new Dish(
+                                        rsCurrentOrders.getString("name"),
+                                        rsCurrentOrders.getInt("weight"),
+                                        rsCurrentOrders.getDouble("price"),
+                                        rsCurrentOrders.getInt("id")
+                                ));
+                            }
                         }
                         orders.add(new Order(id, dishList));
-                        repeat=false;
                     }
+                        repeat=false;
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }

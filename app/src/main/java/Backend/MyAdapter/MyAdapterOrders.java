@@ -38,10 +38,10 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String listNames="";
         boolean refractorString = false;
-        int lenStrig=25;
+        int lenString=25;
         for (Dish i:order.get(position).getListDish()) {
             listNames+=i.getName()+",";
-            if(listNames.length()>=lenStrig){
+            if(listNames.length()>=lenString){
                 refractorString=true;
                 break;
             }
@@ -61,7 +61,7 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
 
     @Override
     public int getItemCount() {
-        return 0;
+        return order.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -77,3 +77,36 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
         }
     }
 }
+
+/*
+public  class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyViewHolder>{
+    Context context;
+    List<Order> orders = new LinkedList<Order>();
+    public MyAdapterOrders(Context context, List<Order> orders){
+        this.context=context;
+        this.orders=orders;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+}*/
