@@ -20,7 +20,7 @@ import java.util.List;
 import Backend.Dish;
 import Backend.Global;
 import Backend.ListDish;
-import Backend.MyAdapter.MyAdapter;
+import Backend.MyAdapter.MyAdapterNewOrder;
 import Database.GetListDish;
 import Database.SqlRequest;
 
@@ -29,9 +29,6 @@ public class NewOrder extends AppCompatActivity {
     RecyclerView recyclerView;
     String menuList;
     ListDish listDish;
-    Toast toast;
-    //List<Dish> orderedDishList = new LinkedList<Dish>();
-    //String orderedDishes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +57,7 @@ public class NewOrder extends AppCompatActivity {
         for (int i = 0; i < listDish.size(); i++) {
             images.add(R.drawable.img);
         }
-        MyAdapter myAdapter = new MyAdapter(this, listDish.getDishList(), images);
+        MyAdapterNewOrder myAdapter = new MyAdapterNewOrder(this, listDish.getDishList(), images);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -20,11 +20,11 @@ import java.util.List;
 
 import Backend.Dish;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapterNewOrder extends RecyclerView.Adapter<MyAdapterNewOrder.MyViewHolder> {
     List<Dish> listOfDish = new LinkedList<Dish>();
     List<Integer> images = new LinkedList<Integer>();
     Context context;
-    public MyAdapter(Context context, List<Dish> listOfDish,List<Integer>images){
+    public MyAdapterNewOrder(Context context, List<Dish> listOfDish,List<Integer>images){
         this.context=context;
         this.listOfDish=listOfDish;
         this.images=images;
