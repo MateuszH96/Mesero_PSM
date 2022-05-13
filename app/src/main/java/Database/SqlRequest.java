@@ -7,5 +7,6 @@ public class SqlRequest {
     public static final String getCoutRequest= "SELECT COUNT(*) FROM (%s) AS foo;";
     public static final String findOrdersByEmail="SELECT o.id_order FROM roznosci.order o WHERE o.email = '%s' GROUP BY o.id_order";
     public static final String getFullListOfCurrentOrders="SELECT * FROM roznosci.order o INNER JOIN roznosci.dish_list dl ON o.id_dish = dl.id WHERE o.email = '%s' ORDER BY o.id_order";
+    public static final String getListOfCurrentOrdersById="SELECT * FROM roznosci.order o INNER JOIN roznosci.dish_list dl ON o.id_dish = dl.id WHERE o.email = '%s' AND o.id_order = %s ORDER BY o.id_order";
     public static final String getListIdCurretOrders ="SELECT foo.id_order FROM (%s) AS foo GROUP BY foo.id_order";
 }

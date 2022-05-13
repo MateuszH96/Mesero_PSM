@@ -66,21 +66,21 @@ public class YourOrders extends AppCompatActivity {
                     Statement statement = Global.connect.getConnection().createStatement();
                     ResultSet rsId = stmt.executeQuery(sqlRequestIdList);
                     while(rsId.next()){
-                        Integer id = Integer.parseInt(rsId.getString("id_order"));
-                        dishList.clear();
-                        ///Jest problem z poprawnym pobieraniem danych !
-                        ResultSet rsCurrentOrders = statement.executeQuery(sqlRequestFullCurrentOrders);
+                        String id = rsId.getString("id_order");
+                        String sqlRequestById = String.format(SqlRequest.getListOfCurrentOrdersById,mailAddres,id);
+                        dishList = null;
+                        dishList = new LinkedList<>();
+                        String checkID = "";
+                        ResultSet rsCurrentOrders = statement.executeQuery(sqlRequestById);
                         while (rsCurrentOrders.next()){
-                            if (rsCurrentOrders.getInt("id_order") == id){
                                 dishList.add( new Dish(
                                         rsCurrentOrders.getString("name"),
                                         rsCurrentOrders.getInt("weight"),
                                         rsCurrentOrders.getDouble("price"),
                                         rsCurrentOrders.getInt("id")
                                 ));
-                            }
                         }
-                        orders.add(new Order(id, dishList));
+                        orders.add(new Order(Integer.parseInt(id), dishList));
                     }
                         repeat=false;
                 } catch (SQLException throwables) {
