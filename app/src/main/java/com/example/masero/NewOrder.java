@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class NewOrder extends AppCompatActivity {
     RecyclerView recyclerView;
     String menuList;
     ListDish listDish;
+    Handler handler = new Handler();
+    Toast toastInThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class NewOrder extends AppCompatActivity {
         try {
             getDataFromDataBase();
         } catch (InterruptedException e) {
-            makeText(this, "coś poszło nie tak", LENGTH_LONG).show();
+            makeText(this, "coś poszło nie tak", LENGTH_SHORT).show();
         }
         listDish = new ListDish(menuList);
         setRecycleView();
@@ -85,11 +88,12 @@ public class NewOrder extends AppCompatActivity {
 
     private void sendOrderToDataBase(String toSend) throws SQLException {
         if (toSend == "") {
-            makeText(this, "Puste zamówienie", LENGTH_LONG).show();
+            makeText(this, "Puste zamówienie", LENGTH_SHORT).show();
         } else {
             ListDish list = new ListDish(toSend);
             SharedPreferences sharedPreferences = getSharedPreferences(SharPref.SHAR_PREF, MODE_PRIVATE);
             String email = sharedPreferences.getString(SharPref.EMAIL_KEY, "");
+            toastInThread = makeText(this,"Zapisano",LENGTH_LONG);
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -105,6 +109,7 @@ public class NewOrder extends AppCompatActivity {
                             String sqlRequest = String.format(SqlRequest.sendOrderToDatabase, id, i.getId().intValue(), email);
                             stmt.executeUpdate(sqlRequest);
                         }
+                        toastInThread.show();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }

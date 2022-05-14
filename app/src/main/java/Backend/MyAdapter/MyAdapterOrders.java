@@ -65,6 +65,12 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
             sum += i.getPrice();
         }
         holder.priceOrder.setText(sum.toString() + "zł");
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

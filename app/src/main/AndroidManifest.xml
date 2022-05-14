@@ -13,22 +13,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Masero">
         <activity
-            android:name=".AddToCart"
-            android:parentActivityName=".NewOrder"
+            android:name="Backend.ShowOrder"
             android:exported="false" />
+        <activity
+            android:name=".AddToCart"
+            android:exported="false"
+            android:parentActivityName=".NewOrder" />
         <activity
             android:name=".NewOrder"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".YourOrders"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PreviousOrders"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ActivityMail"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
