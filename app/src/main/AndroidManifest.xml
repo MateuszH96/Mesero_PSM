@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Masero">
         <activity
-            android:name="Backend.ShowOrder"
+            android:name=".ShowOrder"
+            android:parentActivityName=".YourOrders"
             android:exported="false" />
         <activity
             android:name=".AddToCart"

@@ -59,7 +59,7 @@ public class YourOrders extends AppCompatActivity {
             public void run() {
                 List<Dish> dishList=new LinkedList<Dish>();
                 String mailAddres = getData();
-                String sqlRequestFullCurrentOrders= String.format(SqlRequest.getFullListOfCurrentOrders,mailAddres);
+                String sqlRequestFullCurrentOrders= String.format(SqlRequest.getFullListOfCurrentOrders,mailAddres,"FALSE");
                 String sqlRequestIdList = String.format(SqlRequest.getListIdCurretOrders,sqlRequestFullCurrentOrders);
                 try {
                     Statement stmt = Global.connect.getConnection().createStatement();
@@ -67,10 +67,9 @@ public class YourOrders extends AppCompatActivity {
                     ResultSet rsId = stmt.executeQuery(sqlRequestIdList);
                     while(rsId.next()){
                         String id = rsId.getString("id_order");
-                        String sqlRequestById = String.format(SqlRequest.getListOfCurrentOrdersById,mailAddres,id);
+                        String sqlRequestById = String.format(SqlRequest.getListOfCurrentOrdersById,mailAddres,id,"FALSE");
                         dishList = null;
                         dishList = new LinkedList<>();
-                        String checkID = "";
                         ResultSet rsCurrentOrders = statement.executeQuery(sqlRequestById);
                         while (rsCurrentOrders.next()){
                                 dishList.add( new Dish(

@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_new_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_previous_orders.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_show_order.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_your_orders.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dish_row.xml" value="0.25" />
         <entry key="app/src/main/res/layout/order_row.xml" value="0.2" />

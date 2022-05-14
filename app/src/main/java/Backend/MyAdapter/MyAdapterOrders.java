@@ -1,10 +1,10 @@
 package Backend.MyAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +17,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Backend.Dish;
+import Backend.FormatOrderToActivity;
 import Backend.Order;
+import com.example.masero.ShowOrder;
 
 public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyViewHolder> {
     List<Order> order = new LinkedList<>();
@@ -65,10 +67,15 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
             sum += i.getPrice();
         }
         holder.priceOrder.setText(sum.toString() + "zł");
+        int pos = position;
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String toSend = FormatOrderToActivity.format(order.get(pos));
+                Intent intent = new Intent(context, ShowOrder.class);
+                intent.putExtra("toPrint",toSend);
+                intent.putExtra("visible","show");
+                context.startActivity(intent);
             }
         });
     }
