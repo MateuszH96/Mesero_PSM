@@ -24,10 +24,12 @@ import com.example.masero.ShowOrder;
 public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyViewHolder> {
     List<Order> order = new LinkedList<>();
     Context context;
+    String buttonVisible;
 
-    public MyAdapterOrders(Context context, List<Order> order) {
+    public MyAdapterOrders(Context context, List<Order> order,String buttonVisible) {
         this.order = order;
         this.context = context;
+        this.buttonVisible=buttonVisible;
     }
 
     @NonNull
@@ -68,13 +70,15 @@ public class MyAdapterOrders extends RecyclerView.Adapter<MyAdapterOrders.MyView
         }
         holder.priceOrder.setText(sum.toString() + "zł");
         int pos = position;
+        Integer idOrderToSend = order.get(pos).getIdOrder();
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String toSend = FormatOrderToActivity.format(order.get(pos));
                 Intent intent = new Intent(context, ShowOrder.class);
                 intent.putExtra("toPrint",toSend);
-                intent.putExtra("visible","show");
+                intent.putExtra("visible",buttonVisible);
+                intent.putExtra("idOrder",idOrderToSend.toString());
                 context.startActivity(intent);
             }
         });

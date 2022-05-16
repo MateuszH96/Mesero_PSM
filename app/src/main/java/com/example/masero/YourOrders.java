@@ -42,7 +42,7 @@ public class YourOrders extends AppCompatActivity {
     }
 
     private void setRecycleView() {
-        MyAdapterOrders myAdapterOrders = new MyAdapterOrders(this,orders);
+        MyAdapterOrders myAdapterOrders = new MyAdapterOrders(this,orders,"show");
         recyclerView.setAdapter(myAdapterOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

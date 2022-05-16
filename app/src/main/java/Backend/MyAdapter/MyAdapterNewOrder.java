@@ -41,7 +41,9 @@ public class MyAdapterNewOrder extends RecyclerView.Adapter<MyAdapterNewOrder.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(listOfDish.get(position).getName());
         holder.weight.setText(listOfDish.get(position).getWeight().toString()+" gram");
-        holder.price.setText(listOfDish.get(position).getPrice().toString()+" zł");
+        String priceTmp =listOfDish.get(position).getPrice().toString();
+        String priceToShow=priceTmp.substring(0,priceTmp.indexOf(".")+3)+"zł";
+        holder.price.setText(priceToShow);
         holder.imageView.setImageResource(images.get(position).intValue());
         int pos = position;
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
