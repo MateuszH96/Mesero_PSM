@@ -31,23 +31,36 @@ public class AddToCart extends AppCompatActivity {
     }
 
     public void onClickDecrement(View view) {
-        if(count>1){
+        if(count>=1){
             count--;
+        }else{
+            return;
         }
-        Double result=count*dish.getPrice();
-        price.setText(result.toString().substring(0,result.toString().indexOf(".")+3)+"zł");
-        quantity.setText(count.toString());
+        setContent();
     }
 
     public void onClickIncrement(View view) {
-        if(count<10){
-            count++;
-        }
+        count++;
+        setContent();
+    }
+    void setContent(){
         Double result=count*dish.getPrice();
-        price.setText(result.toString().substring(0,result.toString().indexOf(".")+3)+"zł");
+        String tmp = result.toString();
+        String[] toShow =tmp.split("\\.");
+        switch (toShow[1].length()){
+            case 0:
+                toShow[1]="00";
+                break;
+            case 1:
+                toShow[1]+="0";
+            case 2:
+                break;
+            default:
+                toShow[1] = toShow[1].substring(0,2);
+        }
+        price.setText(toShow[0]+"."+toShow[1]+"zł");
         quantity.setText(count.toString());
     }
-
     public void add(View view) {
         String currentSp;
         String newSp;
