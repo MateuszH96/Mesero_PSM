@@ -1,13 +1,14 @@
 # Mesero_PSM
 ##Co należy przed uruchomieniem zrobić
 utworzyć klasę Utilsoraz podać:
+
 1.Email z którego mają być wysyłane wiadomości
 
 2.Hasło do tego maila
 
 3.nazwę użytkownika w bazie danych
 
-4. hasło do bazy
+4.hasło do bazy
 
 ścieżka w projekcie:
 ```
